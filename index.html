@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Modelo</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+:root {
+  --primary-color: rgb(17, 86, 102);
+  --primary-color-darker: rgb(9, 48, 56);
+}
+
+* {
+  box-sizing: border-box;
+  outline: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--primary-color);
+  font-family: 'Open sans', sans-serif;
+  font-size: 1.3em;
+  line-height: 1.5em;
+}
+
+.container {
+  max-width: 640px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+form input, form label, form button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+form input {
+  font-size: 24px;
+  height: 50px;
+  padding: 0 20px;
+}
+
+form input:focus {
+  outline: 1px solid var(--primary-color);
+}
+
+form button {
+  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  height: 50px;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+form button:hover {
+  background: var(--primary-color-darker);
+}
+
+.senha-gerada{
+  font-size: 2em;
+  color: var(--primary-color);
+  margin: 40px 0;
+}
+
+input{
+  width: 25px;
+}
+
+button{
+  display: block;
+
+  margin: 40px 0;
+  font-size: 1em;
+}
+
+input{
+ width: 30px;
+ height: 30px;
+ margin-left: 10px;
+}
+
+.qtd{
+  width: auto;
+}
+  </style>
+</head>
+
+<body>
+
+  <section class="container">
+    <h1>Gerador de senhas</h1>
+
+    <div class="senha-gerada">Selecione as opções</div>
+
+    Quantidade de caracteres  <input type="number" min="1" max="50" value="10" class="qtd"> <br>
+    Adicionar maiúsculas  <input type="checkbox" class="chk-maiusculas" ><br>
+    Adicionar minúsculas <input type="checkbox" class="chk-minusculas" ><br>
+    Adicionar números<input type="checkbox" class="chk-numeros" ><br>
+    Adicionar símbolos <input type="checkbox" class="chk-simbolos" ><br>
+    <button class="gerar-senha">Gerar Senha</button>
+  </section>
+
+  <script>
+
+
+
+const rand = (min, max) => Math.floor(Math.random()* (max - min) + min);
+const geraMaiuscula = () => String.fromCharCode(rand(65, 91));
+
+const geraMinuscula = () => String.fromCharCode(rand(65, 91)).toLowerCase();
+
+const geraNumero = () => String.fromCharCode(rand(48, 58));
+
+const geraSimbolo = ()=> String.fromCharCode(rand(33, 48))
+
+ function geraSenha(qtd, maiusculas, minusculas, numeros, simbolos){
+const senhaArray = [];
+qtd = Number(qtd);
+
+for(let i = 0; i< qtd; i++){
+    maiusculas && senhaArray.push(geraMaiuscula());
+    minusculas && senhaArray.push(geraMinuscula());
+    numeros && senhaArray.push(geraNumero());
+    simbolos && senhaArray.push(geraSimbolo());
+}
+
+return senhaArray.join('').slice(0, qtd);
+};
+
+const maiuscula = document.querySelector('.chk-maiusculas');
+const minuscula = document.querySelector('.chk-minusculas');
+const numero = document.querySelector('.chk-numeros');
+const simbolo = document.querySelector('.chk-simbolos');
+const senha = document.querySelector('.senha-gerada');
+const botao = document.querySelector('.gerar-senha');
+const qtd = document.querySelector('.qtd');
+
+document.addEventListener('click', (e)=>{
+        
+    const el = e.target;
+    if(el.classList.contains('gerar-senha')){
+     resultado();
+    }
+})
+
+function resultado(){
+senha.innerHTML = geraSenha(qtd.value, maiuscula.checked, minuscula.checked, numero.checked, simbolo.checked);
+}
+
+
+
+
+  </script>
+</body>
+
+</html>
